@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine JS Crash Course</title>
+    <script src="https://unpkg.com/alpinejs"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [x-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto mt-6 max-w-sm">
+        <h1 class="text-5xl mb-4">Just Some Demos</h1>
+
+        <div x-data="{
+            open: false,
+            name:'Brad',
+            search:'',
+            posts:[
+                {title:'post one'},
+                {title:'post 2'},
+                {title:'post 3'},
+                {title:'post 4'}
+                ]
+            }">
+
+            <!-- x-on & x-bind-->
+            <button 
+            x-on:click="open=!open" 
+            x-bind:class="open ? 'bg-blue-800' : 'bg-slate-500'"
+            class="text-white px-6 py-2 rounded-xl">
+                toggle
+            </button>
+
+            <!-- x-show -->
+            <div x-show="open" x-cloak>
+                <p class="bg-gray-200 p-4 my-6 rounded">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque ratione magni est incidunt quod possimus magnam tenetur? Deserunt, consequatur quam!
+                </p>
+            </div>
+            <!-- x-text -->
+            <div class="my-4">
+                The value of Name is <span x-text="name" class="font-bold"></span>
+            </div>
+
+            <!-- x-effect -->
+            <div x-effect="console.log(open)"></div>
+
+
+            <!-- x-model -->
+            <input
+            type="text"
+            class="border p-2 mt-6 w-full mb-2"
+            placeholder="Seach for something"
+            x-model="search">
+            <p> 
+                <span class="font-bold">Searching for: </span>
+                <span x-text="search"></span>
+            </p>
+
+            <!-- x-if -->
+            <template x-if="open">
+                <div class="bg-gray-50 p-2 mt-8">
+                    Template Based on a condition
+                </div>
+            </template>
+
+            <!-- x-for -->
+            <h3 class="text-2xl mt-6 mb-3 font-bold"></h3>
+            <template x-for="post in posts">
+                <div x-text="post.title"></div>
+            </template>
+            <button @click="posts.push({title:'new post'})" class="bg-blue-800 text-white px-4 py-2 rounded-lg mt-4">
+                Add Posts
+            </button>
+
+            <!-- x-ref -->
+            <div class="my-6">
+                <div x-ref="text">Hello</div>
+                <button @click="$refs.text.innerText='Hello World'" class="bg-black text-white p-2 rounded-lg">Click</button>
+                <button @click="$refs.text.remove()" class="bg-black text-white p-2 rounded-lg">remove</button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
