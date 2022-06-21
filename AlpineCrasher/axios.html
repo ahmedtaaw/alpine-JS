@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine JS Crash Course</title>
+    <script src="https://unpkg.com/alpinejs"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+</head>
+<body>
+
+    <div class="container mx-auto mt-6 max-w-sm">
+        <h1 class="text-5xl mb-4">@axios Starter kit ;)</h1>
+
+        <div x-data="{
+            open: false,
+            name:'Brad',
+            search:'',
+            posts:[
+                {title:'post one'},
+                {title:'post 2'},
+                {title:'post 3'},
+                {title:'post 4'}
+                ]
+            }">
+
+           <!-- x-html -->
+            <div x-html="(await axios.get('./partial.html')).data"></div>
+            
+            <!-- $el -->
+            <button
+            x-on:click="$el.innerHTML='Hello World'"
+            class="bg-red-700   text-white mt-4 p-4 border"
+            >Replace Text</button>
+
+            <!-- x-init -->
+            <div x-init="$watch('posts',value=>console.log(value))"></div>
+            <button @click="posts.push({title:'new post'})" class="bg-blue-800 text-white px-4 py-2 rounded-lg mt-4">
+                Add Posts
+            </button>
+
+            <!-- $dispatch -->
+            <div @ahmedtaaw="alert('you have been notified')" class="my-4">
+                <button @click="$dispatch('ahmedtaaw')" class="bg-green-700  text-white px-4 py-2 rounded-lg">Notify</button>
+            </div>
+            
+            <!-- $data -->
+            <button 
+            @click="getLatestPost($data.posts)"
+             class="bg-orange-800 text-white mt-6 p-2 rounded">
+                Get Latest Post
+            </button>
+        </div>
+    </div>
+    <footer x-data class="text-center my-4 ">
+        <p>Copyright &copy; <span x-text="new Date().getFullYear()"></span></p>
+    </footer>
+    <script>
+        function getLatestPost(posts){
+            console.log(posts.slice(-1).pop())
+        }
+    </script>
+</body>
+</html>
